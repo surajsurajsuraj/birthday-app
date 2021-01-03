@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Birthdays from "./personDetails";
 
-function App() {
+//css
+import "./App.css";
+
+const noOfPersons = Birthdays.length;
+
+const BirthdayTag = (props) => {
+  const { name, age } = props.birthday;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <p>{name}</p>
+      <p>{age} years</p>
     </div>
   );
-}
+};
 
-export default App;
+const BirthdayList = () => {
+  return (
+    <section className="BirthdayList">
+      {Birthdays.map((birthday) => {
+        return <BirthdayTag birthday={birthday} />;
+      })}
+    </section>
+  );
+};
+
+const Main = () => {
+  return (
+    <div className="main">
+      <p>{noOfPersons} birthday today</p>
+      <BirthdayList />
+    </div>
+  );
+};
+
+export default Main;
