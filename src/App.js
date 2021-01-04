@@ -1,38 +1,48 @@
-import React from "react";
-import Birthdays from "./personDetails";
+import React, { useState } from "react";
+import personDetails from "./personDetails";
 
 //css
 import "./App.css";
 
-const noOfPersons = Birthdays.length;
-
 const BirthdayTag = (props) => {
-  const { name, age } = props.birthday;
+  const { src, name, age } = props.birthday;
   return (
-    <div>
-      <p>{name}</p>
-      <p>{age} years</p>
+    <div className="birthday">
+      <img className="image" src={src} alt="people  " />
+      <p className="name">{name}</p>
+      <p className="age">{age} years</p>
     </div>
   );
 };
 
 const BirthdayList = () => {
+  const [Birthdays, setBirthdays] = useState(personDetails);
+  const [totalBirthdays, setTotalBirthdays] = useState(Birthdays.length);
+  const clearBirthdayList = () => {
+    setBirthdays([]);
+    setTotalBirthdays(0);
+  };
+
+  const ClearAll = () => (
+    <button className="btn" onClick={clearBirthdayList}>
+      Clear All
+    </button>
+  );
   return (
     <section className="BirthdayList">
-      {Birthdays.map((birthday) => {
-        return <BirthdayTag birthday={birthday} />;
-      })}
+      <p>{totalBirthdays} birthday today</p>
+      {Birthdays.map((birthday) => (
+        <BirthdayTag key={birthday.id} birthday={birthday} />
+      ))}
+      <ClearAll />
     </section>
   );
 };
 
-const Main = () => {
-  return (
-    <div className="main">
-      <p>{noOfPersons} birthday today</p>
-      <BirthdayList />
-    </div>
-  );
-};
+const Main = () => (
+  <div className="main">
+    <BirthdayList />
+  </div>
+);
 
 export default Main;
